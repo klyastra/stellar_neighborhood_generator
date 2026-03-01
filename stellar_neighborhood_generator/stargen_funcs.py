@@ -4,6 +4,9 @@ from scipy.interpolate import interp1d
 
 def sample_from_custom_pdf(f, x_min, x_max, n_samples=10000, n_grid=10000, bins=100):
     """
+    (yes, this function was vibecoded with ChatGPT. While the results and calculations check out,
+    I am only doing it here for the sake of time. All other code outside this function was written by me.)
+
     Sample from a custom probability density function using inverse transform sampling.
     
     Parameters:
