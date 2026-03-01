@@ -81,8 +81,21 @@ ax[1].set_ylabel("Number of stars")
 ax[1].legend()
 
 
-###########
+
+# ---------------------------
+# Save results to output
+# ---------------------------
+
+# Save plot 
 
 plt.tight_layout()
-plt.savefig("plots/IMF+ages.pdf", dpi=200)
+plt.savefig("outputs/IMF+ages.pdf", dpi=200)
 plt.show()
+
+
+# Save samples as CSV
+combined_samples = np.column_stack((samples_imf, samples_age))
+np.savetxt('outputs/output.csv', combined_samples, delimiter='   ', header='Mass [Msol]   Age [Gyr]', comments='')
+
+
+print(f"Samples of {n_samples} stars have been saved to the 'outputs' folder.")
