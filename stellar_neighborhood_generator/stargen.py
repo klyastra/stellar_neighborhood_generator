@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 # import custom functions
 from stargen_funcs import *
+from star_class import Star
 
 
 # ---------------------------
@@ -99,3 +100,14 @@ np.savetxt('outputs/output.csv', combined_samples, delimiter='   ', header='Mass
 
 
 print(f"Samples of {n_samples} stars have been saved to the 'outputs' folder.")
+
+
+
+
+####  Use the class "Star" to create a list of stars
+stars = []
+for i in range(10):
+    stars.append(Star(f"Star {i+1}", samples_imf[i], samples_age[i]))
+
+for star in stars:
+    print(f"{star.name}, {star.initial_mass:.3f} Msol, {star.age:.3f} Gyr, Main Sequence? ({star.main_sequence}), {star.radius:.3f} Rsol, {star.temperature:.0f} K, {star.luminosity:.3f} Lsol")
