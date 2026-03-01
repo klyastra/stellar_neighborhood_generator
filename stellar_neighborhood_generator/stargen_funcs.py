@@ -137,8 +137,8 @@ def ages_Gyr(x):
     The function is not normalized; normalization is done when you input this function into sample_from_custom_pdf()
     '''
 
-    thindisk = skewnorm.pdf(x, 4, loc=2.8, scale=3)
-    thickdisk = 0.025*skewnorm.pdf(x, 2.75, loc=10.5, scale=0.8)
+    thindisk = skewnorm.pdf(x, 2.5, loc=2.5, scale=2.75)
+    thickdisk = 0.02*skewnorm.pdf(x, -2.5, loc=10.5, scale=1)
     return thindisk + thickdisk
 
 

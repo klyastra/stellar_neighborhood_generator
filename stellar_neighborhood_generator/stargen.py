@@ -84,5 +84,5 @@ ax[1].legend()
 ###########
 
 plt.tight_layout()
-plt.savefig("plots/stellar_IMF.pdf", dpi=200)
+plt.savefig("plots/IMF+ages.pdf", dpi=200)
 plt.show()
