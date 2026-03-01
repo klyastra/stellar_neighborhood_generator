@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.integrate import cumulative_trapezoid
 from scipy.interpolate import interp1d
+from scipy.stats import skewnorm
 
 def sample_from_custom_pdf(f, x_min, x_max, n_samples=10000, n_grid=10000, bins=100):
     """
@@ -125,6 +126,20 @@ def IMF(x):
 
     return y
 
+
+
+def ages_Gyr(x):
+    '''
+    A fitted composite function that attempts to model the age distribution of the stellar neighborhood.
+    This is based on the age distribution of G-type exoplanet-hosting stars shown in
+    Figure 6 of Bonfanti et al. 2016:  https://www.aanda.org/articles/aa/full_html/2016/01/aa27297-15/F6.html 
+
+    The function is not normalized; normalization is done when you input this function into sample_from_custom_pdf()
+    '''
+
+    thindisk = skewnorm.pdf(x, 4, loc=2.8, scale=3)
+    thickdisk = 0.025*skewnorm.pdf(x, 2.75, loc=10.5, scale=0.8)
+    return thindisk + thickdisk
 
 
 
