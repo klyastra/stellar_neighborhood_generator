@@ -4,6 +4,7 @@ from scipy.interpolate import interp1d
 from scipy.stats import skewnorm
 
 from stefan-boltzmann_funcs import *
+from MLRT_relations import *
 
 
 def sample_from_custom_pdf(f, x_min, x_max, n_samples=10000, n_grid=10000, bins=100):

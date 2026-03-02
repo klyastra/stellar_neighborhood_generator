@@ -3,7 +3,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # import custom functions
-from MLT_relations import *
+from MLRT_relations import *
+
+
+'''
+This script is for plotting the main-sequence mass relationships with luminosity, radius, and temperature.
+I made this to ensure that these mass relationships are working as intended,
+and that they match results of Eker et al. (2018)
+'''
+
 
 
 # create array of masses (Msol); x-axis

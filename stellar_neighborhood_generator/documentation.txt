@@ -6,7 +6,8 @@ Primary dependencies of stargen.py:
   > star_class (where the Star class/object is defined.
                 Derived attributes are computed using secondary dependencies.)
 
-
 stargen_funcs and star_class uses secondary modules. These include:
 * spectral_types --> star_class
-* stefan_boltzmann_funcs --> MLT_relations --> star_class
+* stefan_boltzmann_funcs --> MLRT_relations --> star_class
+
+There is also the MLRT_test.py script which simply tests the MLRT_relations module.
