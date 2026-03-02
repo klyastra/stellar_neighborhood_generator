@@ -1,5 +1,6 @@
 import numpy as np
 from stargen_funcs import *
+from MLRT_relations import *
 from spectral_types import MS_spectral_type
 
 
@@ -34,14 +35,11 @@ class Star:
 
         # If the star is on the main sequence, calculate the radius, temperature, and luminosity
         if self.main_sequence == True:
-            self.radius = self.initial_mass**0.8  # [Rsol]
-
-            # Luminosity relationship only applies to stars >0.43 Msol; see Eker et al. (2018)
-            # Eker et al. (2018):  https://ui.adsabs.harvard.edu/abs/2018MNRAS.479.5491E
-            self.luminosity = self.initial_mass**3.5  # [Lsol]; L  ∝  M^3.5  ∝  R^2 T^4  ∝ (M^1.6)(M^2.0)
-
-            # Calculate temperature AFTER radius & luminosity are defined
-            self.temperature = self.initial_mass**0.475  # derived via Stefan-Boltzmann Law
+            # Derived MS properties based on mass relations by Eker et al. 2018.
+            # Eker et al. 2018 paper is here:  https://ui.adsabs.harvard.edu/abs/2018MNRAS.479.5491E
+            self.luminosity = MS_mass2lum(self.initial_mass)  # [Lsol]
+            self.radius = MS_mass2radius(self.initial_mass)  # [Rsol]
+            self.temperature = MS_mass2temp(self.initial_mass)  # [K]
 
             self.spectral_type = MS_spectral_type(self.initial_mass, self.temperature)
 
