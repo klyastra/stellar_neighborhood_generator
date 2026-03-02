@@ -3,6 +3,9 @@ from scipy.integrate import cumulative_trapezoid
 from scipy.interpolate import interp1d
 from scipy.stats import skewnorm
 
+from stefan-boltzmann_funcs import *
+
+
 def sample_from_custom_pdf(f, x_min, x_max, n_samples=10000, n_grid=10000, bins=100):
     """
     (yes, this function was vibecoded with ChatGPT. While the results and calculations check out,

@@ -96,26 +96,33 @@ plt.show()
 
 # Save samples as CSV
 ### Use the class "Star" to create a list of stars
-MS_bool, samples_radii, samples_temp, samples_lum = [], [], [], []
+import pandas as pd
+
+MS_bool, samples_spT, samples_radii, samples_temp, samples_lum = [], [], [], [], []
 
 for i in range(n_samples):
     star = Star(f"Star {i+1}", samples_imf[i], samples_age[i])
 
     MS_bool.append(star.main_sequence)
+    samples_spT.append(star.spectral_type)
     samples_radii.append(star.radius)
     samples_temp.append(star.temperature)
     samples_lum.append(star.luminosity)
 
-'''
-for star in stars:
-    print(f"{star.name}, {star.initial_mass:.3f} Msol, {star.age:.3f} Gyr, Main Sequence? ({star.main_sequence}), {star.radius:.3f} Rsol, {star.temperature:.0f} K, {star.luminosity:.3f} Lsol")
-'''
+# Compile all 1D arrays as columns of pandas dataframe table
+output = {
+    'Initial_mass [Msol]': samples_imf,
+    'Age [Gyr]': samples_age,
+    'Main sequence?': MS_bool,
+    'Spectral type': samples_spT,
+    'Radii [Rsol]': samples_radii,
+    'Temperature': samples_temp,
+    'Luminosity [Lsol]': samples_lum,
+}
 
-output = np.column_stack((samples_imf, samples_age,
-                        np.array(MS_bool), np.array(samples_radii), np.array(samples_temp), np.array(samples_lum)))
+df = pd.DataFrame(output)
 
-np.savetxt('outputs/output.csv', output, delimiter='  ',
-    header='Mass_[Msol]  Age_[Gyr]  Main-Seq_flag  Radius_[Rsol]  Temperature_[K]  Luminosity_[Lsol]')
-
+# Export the DataFrame to a CSV file named 'output_data.csv'
+df.to_csv('outputs/output.csv', sep='\t', index=False)  # tab delimiter to separate columns
 
 print(f"Samples of {n_samples} stars have been saved to the 'outputs' folder.")
