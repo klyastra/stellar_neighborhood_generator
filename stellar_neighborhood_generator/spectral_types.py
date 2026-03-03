@@ -98,18 +98,85 @@ def MS_spectral_type(mass, temp):
     '''
     Main-sequence (MS) stars:
 
-    MS spectral type temperature boundaries are based on Table 7 of Eker et al. (2018)
+    O2 spectral type from Table 7 of Eker et al. (2018)
         https://ui.adsabs.harvard.edu/abs/2018MNRAS.479.5491E
     
-    Late M-type spectral type temperature boundaries are based on Mamajek's star table:
+    All other spectral type temperature boundaries are based on Mamajek's star table:
         https://www.pas.rochester.edu/~emamajek/EEM_dwarf_UBVIJHK_colors_Teff.txt
-        
+
     '''
 
-    # substellar M-dwarfs; based on Mamajek's table
+    # M-type stars
     if (temp >= 2310) & (temp < 2365):  # M/L transition
         return "M9.5V"
     elif (temp >= 2365) & (temp < 2420):  # Use avg (M9.5+M9)/2 and M8.5 temp (2420 K) as boundaries
         return "M9V"
-    elif (temp >= 2420):
+    elif (temp >= 2420) & (temp < 2630):  # between M8.5V-M7.5V
+        return "M8V"
+    elif (temp >= 2630) & (temp < 2740):  # between M7.5V-M6.5V
+        return "M7V"
+    elif (temp >= 2740) & (temp < 2930):  # between M6.5V-M5.5V
+        return "M6V"
+    elif (temp >= 2930) & (temp < 3110):  # between M5.5V-M4.5V
+        return "M5V"
+    elif (temp >= 3110) & (temp < 3270):  # between M4.5V-M3.5V
+        return "M4V"
+    elif (temp >= 3270) & (temp < 3470):  # between M3.5V-M2.5V
+        return "M3V"
+    elif (temp >= 3470) & (temp < 3620):  # between M2.5V-M1.5V
+        return "M2V"
+    elif (temp >= 3620) & (temp < 3770):  # between M1.5V-M0.5V
+        return "M1V"
+    elif (temp >= 3770) & (temp < 3890):  # upper limit is the averaged temp of M0V and K9V
+        return "M0V"
+
+    # K-type stars
+    elif (temp >= 3890) & (temp < 3960):  # lower limit is the averaged temp of M0V and K9V, upper limit is K9V-K8V average.
+        return "K9V"
+    elif (temp >= 3960) & (temp < 4045):  # okay, you get the point for the temp boundaries.
+        return "K8V"
+    elif (temp >= 4045) & (temp < 4200):
+        return "K7V"
+    elif (temp >= 4200) & (temp < 4370):
+        return "K4V"
+    elif (temp >= 4370) & (temp < 4520):
+        return "K5V"
+    elif (temp >= 4520) & (temp < 4715):
+        return "K4V"
+    elif (temp >= 4715) & (temp < 4965):
+        return "K3V"
+    elif (temp >= 4965) & (temp < 5135):
+        return "K2V"
+    elif (temp >= 5135) & (temp < 5220):
+        return "K1V"
+    elif (temp >= 5220) & (temp < 5325):
+        return "K0V"
+
+    # G-type stars
+    elif (temp >= 5325) & (temp < 5430):
+        return "G9V"
+    elif (temp >= 5430) & (temp < 5515):
+        return "G8V"
+    elif (temp >= 5515) & (temp < 5575):
+        return "G7V"
+    elif (temp >= 5575) & (temp < 5630):
+        return "G6V"
+    elif (temp >= 5630) & (temp < 5670):
+        return "G5V"
+    elif (temp >= 5670) & (temp < 5700):
+        return "G4V"
+    elif (temp >= 5700) & (temp < 5745):
+        return "G3V"
+    elif (temp >= 5745) & (temp < 5815):
+        return "G2V"
+    elif (temp >= 5815) & (temp < 5895):
+        return "G1V"
+    elif (temp >= 5895) & (temp < 5990):  # upper bound is F9.5V
+        return "G0V"
+    
+    # F-type stars
+    elif (temp >= 5990) & (temp < 6115):  # lower bound is F9.5V
+        return "F9V"
+    # everything else
+    else:
         return "-"

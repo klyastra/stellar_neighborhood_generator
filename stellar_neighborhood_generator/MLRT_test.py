@@ -17,7 +17,7 @@ and that they match results of Eker et al. (2018)
 # create array of masses (Msol); x-axis
 x = np.linspace(0.05, 50, 1000)
 
-fig, ax = plt.subplots(3, 2, figsize=(12, 9))
+fig, ax = plt.subplots(3, 2, figsize=(12, 10))
 
 ###
 
@@ -62,4 +62,4 @@ ax[2,1].set_title("Mass-Temperature (log scale)")
 plt.suptitle("Main-Sequence Mass Relationships: Luminosity, Radius, Temperature\n(based on Eker et al. 2018)", fontsize=16)
 plt.tight_layout()
 plt.show()
-plt.savefig("outputs/MLT_relations.pdf", dpi=200)
+plt.savefig("outputs/MLRT_relations.pdf", dpi=200)
