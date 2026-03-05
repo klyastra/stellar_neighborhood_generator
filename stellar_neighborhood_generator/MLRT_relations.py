@@ -6,7 +6,7 @@ from stefanboltzmann_funcs import *
 def MS_mass2lum(x):
     '''
     Calculate a main-sequence (MS) star's luminosity [Lsol] given its mass, using the M-L relation fit equation shown in
-    Figure 8 of Eker et al. 2018  (https://ui.adsabs.harvard.edu/abs/2018MNRAS.479.5491E)
+    Table 4 of Eker et al. 2018  (https://ui.adsabs.harvard.edu/abs/2018MNRAS.479.5491E)
 
     The mass-luminosity relation is a linear piecewise function in logM-logL space.
 
@@ -19,29 +19,27 @@ def MS_mass2lum(x):
 
     # logM and logL breakpoint values are given in Figure 8.
     # the logL value at the corresponding logM breakpoint is estimated by visual inspection of Figure 8
-    logM0, logL0 = -1, -3.2  # beginning of the curve, starting from 0.1 Msol (logM = -1)
-    logM1, logL1 = np.log10(0.45), -1.6  # first breakpoint
-    logM2, logL2 = np.log10(0.72), -0.5
-    logM3, logL3 = np.log10(1.05), 0.2
-    logM4, logL4 = np.log10(2.4), 1.7
-    logM5, logL5 = np.log10(7), 3.45  # last breakpoint
-    logM6, logL6 = 1.6, 5.75  # end
+    logM1 = np.log10(0.45)  # first breakpoint
+    logM2 = np.log10(0.72)
+    logM3 = np.log10(1.05)
+    logM4 = np.log10(2.40)
+    logM5 = np.log10(7)  # last breakpoint
 
-    # Slopes
-    s0 = (logL1-logL0) / (logM1-logM0)  # from logM0 to logM1
-    s1 = (logL2-logL1) / (logM2-logM1)
-    s2 = (logL3-logL2) / (logM3-logM2)
-    s3 = (logL4-logL3) / (logM4-logM3)
-    s4 = (logL5-logL4) / (logM5-logM4)
-    s5 = (logL6-logL5) / (logM6-logM5)  # from logM5 to beyond
+    # Slopes or power-law indices
+    s0 = 2.028
+    s1 = 4.572
+    s2 = 5.743
+    s3 = 4.329
+    s4 = 3.967
+    s5 = 2.865
 
     # y-intercepts
-    b0 = logL0 - s0*logM0  # from logM0 to logM1
-    b1 = logL1 - s1*logM1
-    b2 = logL2 - s2*logM2
-    b3 = logL3 - s3*logM3
-    b4 = logL4 - s4*logM4
-    b5 = logL5 - s5*logM5  # from logM5 to beyond
+    b0 = -0.976
+    b1 = -0.102
+    b2 = -0.007
+    b3 = 0.010
+    b4 = 0.093
+    b5 = 1.105
 
     # piecewise function
     logy[(logx < logM1)] = s0*logx[(logx < logM1)] + b0  # include stars smaller than 0.1 Msol (logM0) so things don't break

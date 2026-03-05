@@ -61,5 +61,5 @@ ax[2,1].set_title("Mass-Temperature (log scale)")
 
 plt.suptitle("Main-Sequence Mass Relationships: Luminosity, Radius, Temperature\n(based on Eker et al. 2018)", fontsize=16)
 plt.tight_layout()
-plt.show()
 plt.savefig("outputs/MLRT_relations.pdf", dpi=200)
+plt.show()
