@@ -41,13 +41,21 @@ def MS_mass2lum(x):
     b4 = 0.093
     b5 = 1.105
 
+    # Inequalities as boolean filters
+    part0 = logx < logM1
+    part1 = (logx >= logM1) & (logx < logM2)
+    part2 = (logx >= logM2) & (logx < logM3)
+    part3 = (logx >= logM3) & (logx < logM4)
+    part4 = (logx >= logM4) & (logx < logM5)
+    part5 = logx >= logM5
+
     # piecewise function
-    logy[(logx < logM1)] = s0*logx[(logx < logM1)] + b0  # include stars smaller than 0.1 Msol (logM0) so things don't break
-    logy[(logx >= logM1) & (logx < logM2)] = s1*logx[(logx >= logM1) & (logx < logM2)] + b1
-    logy[(logx >= logM2) & (logx < logM3)] = s2*logx[(logx >= logM2) & (logx < logM3)] + b2
-    logy[(logx >= logM3) & (logx < logM4)] = s3*logx[(logx >= logM3) & (logx < logM4)] + b3
-    logy[(logx >= logM4) & (logx < logM5)] = s4*logx[(logx >= logM4) & (logx < logM5)] + b4
-    logy[(logx >= logM5)] = s5*logx[(logx >= logM5)] + b5  # include stars bigger than 50 Msol (logM6) so things don't break
+    logy[part0] = s0*logx[part0] + b0  # include stars smaller than 0.1 Msol (logM0) so things don't break
+    logy[part1] = s1*logx[part1] + b1
+    logy[part2] = s2*logx[part2] + b2
+    logy[part3] = s3*logx[part3] + b3
+    logy[part4] = s4*logx[part4] + b4
+    logy[part5] = s5*logx[part5] + b5  # include stars bigger than 50 Msol (logM6) so things don't break
 
     # convert log back to linear space
     y = 10**logy
@@ -70,7 +78,7 @@ def MS_mass2rad_lowmass(x):
     Input mass [Msol] for radius [Rsol]
     '''
     Rsol = 0.438*(x**2) + 0.479*x + 0.075
-    return Rsol
+    return Rsol/0.992  # divide by 0.992 to normalize; this is to ensure 1 Msol = 1 Rsol
 
 
 
@@ -92,10 +100,13 @@ def MS_mass2temp(x):
     m0 = 0  # minimum mass allowed
     m1 = 1.5  # 1st breakpoint
 
+    # Inequalities as boolean filters
+    part0 = (x >= m0) & (x < m1)
+    part1 = x >= m1
 
     # piecewise function
-    y[(x >= m0) & (x < m1)] = SB_temp(MS_mass2lum(x[(x >= m0) & (x < m1)]), MS_mass2rad_lowmass(x[(x >= m0) & (x < m1)]))  # <1.5 Msol; Stefan-Boltzmann law computation from M-L and M-R relations
-    y[(x >= m1)] = MS_mass2temp_highmass(x[(x >= m1)])  # >1.5 Msol
+    y[part0] = SB_temp(MS_mass2lum(x[part0]), MS_mass2rad_lowmass(x[part0]))  # <1.5 Msol; Stefan-Boltzmann law computation from M-L and M-R relations
+    y[part1] = MS_mass2temp_highmass(x[part1])  # >1.5 Msol
 
     return y
 
@@ -118,8 +129,12 @@ def MS_mass2radius(x):
     m0 = 0  # minimum mass allowed
     m1 = 1.5  # 1st breakpoint
 
+    # Inequalities as boolean filters
+    part0 = (x >= m0) & (x < m1)
+    part1 = x >= m1
+
     # piecewise function
-    y[(x >= m0) & (x < m1)] = MS_mass2rad_lowmass(x[(x >= m0) & (x < m1)])  # <1.5 Msol
-    y[(x >= m1)] = SB_radius(MS_mass2lum(x[(x >= m1)]), MS_mass2temp_highmass(x[(x >= m1)]))  # >1.5 Msol; Stefan-Boltzmann law computation from M-L and M-T relations
+    y[part0] = MS_mass2rad_lowmass(x[part0])  # <1.5 Msol
+    y[part1] = SB_radius(MS_mass2lum(x[part1]), MS_mass2temp_highmass(x[part1]))  # >1.5 Msol; Stefan-Boltzmann law computation from M-L and M-T relations
 
     return y

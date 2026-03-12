@@ -177,6 +177,88 @@ def MS_spectral_type(mass, temp):
     # F-type stars
     elif (temp >= 5990) & (temp < 6115):  # lower bound is F9.5V
         return "F9V"
+    elif (temp >= 6115) & (temp < 6230):
+        return "F8V"
+    elif (temp >= 6230) & (temp < 6315):
+        return "F7V"
+    elif (temp >= 6315) & (temp < 6450):
+        return "F6V"
+    elif (temp >= 6450) & (temp < 6610):
+        return "F5V"
+    elif (temp >= 6610) & (temp < 6710):
+        return "F4V"
+    elif (temp >= 6710) & (temp < 6785):
+        return "F3V"
+    elif (temp >= 6785) & (temp < 6920):
+        return "F2V"
+    elif (temp >= 6920) & (temp < 7120):
+        return "F1V"
+    elif (temp >= 7120) & (temp < 7310):
+        return "F0V"
+    
+    # A-type stars
+    elif (temp >= 7310) & (temp < 7495):
+        return "A9V"
+    elif (temp >= 7495) & (temp < 7675):
+        return "A8V"
+    elif (temp >= 7675) & (temp < 7835):
+        return "A7V"
+    elif (temp >= 7835) & (temp < 8005):
+        return "A6V"
+    elif (temp >= 8005) & (temp < 8175):
+        return "A5V"
+    elif (temp >= 8175) & (temp < 8425):
+        return "A4V"
+    elif (temp >= 8425) & (temp < 8700):
+        return "A3V"
+    elif (temp >= 8700) & (temp < 9050):
+        return "A2V"
+    elif (temp >= 9050) & (temp < 9500):
+        return "A1V"
+    elif (temp >= 9500) & (temp < 10400):  # B9.5V as upper bound
+        return "A0V"
+    
+    # B-type stars
+    elif (temp >= 10400) & (temp < 11500):  # B9.5V as lower bound
+        return "B9V"
+    elif (temp >= 11500) & (temp < 13150):
+        return "B8V"
+    elif (temp >= 13150) & (temp < 14250):
+        return "B7V"
+    elif (temp >= 14250) & (temp < 15100):
+        return "B6V"
+    elif (temp >= 15100) & (temp < 16050):
+        return "B5V"
+    elif (temp >= 16050) & (temp < 16700):
+        return "B4V"
+    elif (temp >= 16700) & (temp < 18500):  # B2.5V as upper bound
+        return "B3V"
+    elif (temp >= 18500) & (temp < 24500):  # B2.5V as lower bound, B1.5V upper bound
+        return "B2V"
+    elif (temp >= 24500) & (temp < 29000):  # B1.5V as lower bound, B0.5V upper bound
+        return "B1V"
+    elif (temp >= 29000) & (temp < 31900):  # B0.5V as lower bound, O9.5V upper bound
+        return "B0V"
+
+    # O-type stars
+    elif (temp >= 31900) & (temp < 34300):
+        return "O9V"
+    elif (temp >= 34300) & (temp < 36100):
+        return "O8V"
+    elif (temp >= 36100) & (temp < 38300):
+        return "O7V"
+    elif (temp >= 38300) & (temp < 40500):
+        return "O6V"
+    elif (temp >= 40500) & (temp < 42150):
+        return "O5V"
+    elif (temp >= 42150) & (temp < 43900):
+        return "O4V"
+    elif (temp >= 43900) & (temp < 50950):
+        return "O3V"
+    elif (temp >= 50950):
+        return "O2V"
+    
     # everything else
     else:
         return "-"
+    

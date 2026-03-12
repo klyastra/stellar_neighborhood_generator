@@ -4,9 +4,25 @@ from scipy.interpolate import interp1d
 from scipy.stats import skewnorm
 
 
-def sample_from_custom_pdf(f, x_min, x_max, n_samples=10000, n_grid=10000, bins=100):
+def is_integer(s):
+    '''
+    A function that checks if a given string can be converted into an integer.
+
+    Input: string
+
+    Output: bool  
+    '''
+
+
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
+
+def sample_from_custom_pdf(f, x_min, x_max, n_samples=10000, n_grid=10000, bins=100, seed=0):
     """
-    (yes, this function was vibecoded with ChatGPT. While the results and calculations check out,
+    (yes, half this function was vibecoded with ChatGPT. While the results and calculations check out,
     I am only doing it here for the sake of time. All other code outside this function was written by me.)
 
     Sample from a custom probability density function using inverse transform sampling.
@@ -42,7 +58,8 @@ def sample_from_custom_pdf(f, x_min, x_max, n_samples=10000, n_grid=10000, bins=
     # Build inverse CDF function
     inv_cdf = interp1d(cdf, x, bounds_error=False, fill_value=(x_min, x_max))
 
-    # Generate uniform samples
+    # Generate uniform samples with a given seed
+    np.random.seed(seed)
     u = np.random.rand(n_samples)
 
     # Transform via inverse CDF
@@ -144,7 +161,7 @@ def ages_Gyr(x):
 
 
 
-def MS_endmass(age_Gyr):
+def lifetime2mass(age_Gyr):
     """
     Gives you the maximum main-sequence (MS) star mass for a given age (assumed to be the MS lifetime for aforementioned mass)
 
@@ -158,3 +175,17 @@ def MS_endmass(age_Gyr):
     mass = ( age_yr * 10**(-10) )**(-2.5)
 
     return mass  # in Msol
+
+def mass2lifetime(Msol):
+    """
+    Gives you the main-sequence lifetime of a star for a given mass, in Gyr.
+
+    Input:
+        star mass [Msol]
+
+    Output
+        MS star lifetime in gigayears [Gyr]
+    """
+    lifetime_Gyr = 10 * Msol**(-2.5)  # based on L/M
+
+    return lifetime_Gyr  # in Msol

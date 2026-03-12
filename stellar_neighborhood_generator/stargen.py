@@ -17,14 +17,25 @@ n_samples = 1000
 bins_imf = 500
 bins_age = 50
 
+# The RNG seed is manually inputted by user
+seed = input("Enter a integer for the RNG seed: ")
 
+if is_integer(seed) == True:
+    print("You entered: " + seed)
+    seed = int(seed)  # convert string to int
+if is_integer(seed) == False:
+    print("Your seed is invalid because it is not an integer. Moving on using a default seed of 0...")
+    seed = 0
+
+# Begin generating stars
 samples_imf, x_grid_imf, pdf_imf = sample_from_custom_pdf(
     IMF,
     x_min=0.0005,
     x_max=100,
     n_samples=n_samples,
     n_grid=5000,
-    bins=bins_imf
+    bins=bins_imf,
+    seed=seed
 )
 
 # Plot results. Density = False makes it so that N is represented by bin height, not area.
@@ -39,9 +50,6 @@ ax[0].set_xscale('log')
 ax[0].set_title("Stellar initial mass function - frequency of stars by mass (dN/dM)")
 ax[0].set_xlabel("Mass [Msol]")
 ax[0].set_ylabel("Number of stars")
-
-
-#ax[0].axvline(x=MS_endmass(age_Gyr), c='green', ls='--', lw=3, label=f'Age cutoff ({age_Gyr} Gyr)')
 
 
 # label spectral type mass boundaries according to Mamajek's star table:
@@ -98,26 +106,32 @@ plt.show()
 ### Use the class "Star" to create a list of stars
 import pandas as pd
 
-MS_bool, samples_spT, samples_radii, samples_temp, samples_lum = [], [], [], [], []
+samples_stage, samples_spT, samples_radii, samples_temp, samples_lum = [], [], [], [], []
+samples_remnantage, samples_finalmass = [], []
 
 for i in range(n_samples):
     star = Star(f"Star {i+1}", samples_imf[i], samples_age[i])
 
-    MS_bool.append(star.main_sequence)
+    samples_stage.append(star.evol_stage)
     samples_spT.append(star.spectral_type)
     samples_radii.append(star.radius)
     samples_temp.append(star.temperature)
     samples_lum.append(star.luminosity)
+    
+    samples_remnantage.append(star.remnant_age)
+    samples_finalmass.append(star.final_mass)
 
 # Compile all 1D arrays as columns of pandas dataframe table
 output = {
-    'Initial_mass [Msol]': samples_imf,
+    'Initial mass [Msol]': samples_imf,
     'Age [Gyr]': samples_age,
-    'Main sequence?': MS_bool,
+    'Evolutionary stage': samples_stage,
     'Spectral type': samples_spT,
     'Radii [Rsol]': samples_radii,
     'Temperature': samples_temp,
     'Luminosity [Lsol]': samples_lum,
+    'Remnant age [Gyr]': samples_remnantage,
+    'Final mass [Msol]': samples_finalmass,
 }
 
 df = pd.DataFrame(output)
